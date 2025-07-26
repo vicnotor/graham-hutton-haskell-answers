@@ -24,6 +24,9 @@ factors n = [x | x <- [1 .. n], n `mod` x == 0]
 perfects :: Int -> [Int]
 perfects n = [x | x <- [1 .. n], sum (drop 1 $ reverse $ factors x) == x]
 
+-- or
+-- perfects n = [x | x <- [1 .. n], sum (init factors x) == x]
+
 -- 5.7
 twoGenerators = [(x, y) | x <- [1, 2], y <- [3, 4]] -- [(1,3),(1,4),(2,3),(2,4)]
 
@@ -47,3 +50,6 @@ scalarproduct xs ys = sum [x * y | (x, y) <- zip xs ys]
 -- freqs xs = [percent (count x xs) n | x <- ['a'..'z'] ++ ['A'..'Z']
 --            where n = lowers xs ++ uppers xs
 -- add the common capital letter frequencies to `table`
+--
+-- a more elegant solution would consider the same letter frequencies for
+-- uppercase letters.
