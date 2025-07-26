@@ -1,5 +1,5 @@
 {
-  description = "Simple Haskell devshell flake for imperative use of cabal";
+  description = "Simple Haskell devshell flake";
 
   inputs.nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
 
@@ -14,21 +14,14 @@
           pkgs = import nixpkgs {inherit system;};
         });
   in {
-    devShells = forEachSupportedSystem ({pkgs}: let
-      cabalclean = pkgs.writeShellScriptBin "cabalclean" ''
-          rm -r dist-newstyle
-      '';
-    in {
+    devShells = forEachSupportedSystem ({pkgs}: {
       default = pkgs.mkShell {
         packages = with pkgs; [
           (pkgs.haskellPackages.ghcWithPackages
             (ps:
               with ps; [
-                cabal-install
                 haskell-language-server
-                hlint
               ]))
-            cabalclean
         ];
       };
     });
